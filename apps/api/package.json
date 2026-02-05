@@ -1,0 +1,21 @@
+{
+    "name": "api",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "nodemon src/server.js",
+        "build": "echo 'No build step for Express'",
+        "start": "node src/server.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.1",
+        "express": "^4.18.2",
+        "helmet": "^7.1.0",
+        "mongoose": "^8.1.1",
+        "morgan": "^1.10.0",
+        "socket.io": "^4.8.3"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.3"
+    }
+}
