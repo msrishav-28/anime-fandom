@@ -6,8 +6,8 @@ This document details the production infrastructure and deployment pipeline for 
 
 | Component | Service | Tier/Spec | Region |
 |-----------|---------|-----------|--------|
-| **Frontend** | Vercel | Pro | Global (Edge) |
-| **Backend** | Railway | Developer Plan (8GB RAM) | US-West |
+| **Frontend** | Vercel (Recommended) | Pro | Global (Edge) |
+| **Backend** | Railway OR Render | Developer Plan | US-West |
 | **Database** | MongoDB Atlas | M10 Cluster (General) | AWS US-West |
 | **Cache** | Upstash Redis | Pay-as-you-go | AWS US-West |
 | **Storage** | AWS S3 | Standard | US-East-1 |
@@ -38,7 +38,21 @@ AWS_S3_BUCKET=neuro-archive-prod
 AWS_ACCESS_KEY_ID=***
 AWS_SECRET_ACCESS_KEY=***
 CORS_ORIGIN=https://neuroarchive.com
-```
+### Backend (Alternative: Render)
+1.  **Create New Web Service** on Render.
+2.  **Connect GitHub Repo**: `msrishav-28/anime-fandom`.
+3.  **Root Directory**: `apps/api`.
+4.  **Build Command**: `npm install` (or custom build script if needed).
+5.  **Start Command**: `node src/server.js` (or `npm start`).
+6.  **Environment Variables**:
+    ```env
+    PORT=10000 (Render uses this default)
+    NODE_ENV=production
+    MONGODB_URI=mongodb+srv://...
+    JWT_SECRET=***
+    # ...add other vars from Railway list above
+    ```
+7.  **Scale**: Select "Free" or "Starter" instance type.
 
 ---
 
