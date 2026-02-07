@@ -78,3 +78,10 @@ To make the site feel alive, we will seed ~20 "Theory" comments on controversial
 ## 6. Resources
 - **Assets Drive:** `link-to-google-drive` (Images, Model GLBs)
 - **Style Guide:** Refer to existing content style guide.
+
+## 7. Implementation Status
+- [x] **Seed Script Created**: `apps/api/src/seed.js` contains rich data for:
+    - **Solo Leveling**: Sung Jin-Woo, Cha Hae-In, Igris.
+    - **Elden Ring**: Malenia, Starscourge Radahn, Rivers of Blood.
+    - **Theories**: Mock comments for initial engagement.
+- [ ] **Execution**: Run `node src/seed.js` after configuring `MONGODB_URI` in `apps/api/.env`.
