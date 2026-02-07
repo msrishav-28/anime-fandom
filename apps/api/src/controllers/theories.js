@@ -37,9 +37,10 @@ exports.createTheory = async (req, res) => {
         });
 
         // Award RAM for contributing
-        user.ram_balance += 20;
-        user.total_ram_earned += 20;
-        await user.save();
+        const reward = require('../services/gamification').calculateReward('create_theory');
+        if (userEmail) {
+            await require('../services/gamification').awardRAM(userEmail, reward, 'create_theory');
+        }
 
         res.status(201).json(theory);
     } catch (err) {

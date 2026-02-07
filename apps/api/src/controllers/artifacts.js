@@ -23,7 +23,11 @@ exports.createArtifact = async (req, res) => {
             wiki_slug
         });
 
-        // TODO: Award RAM to user here
+        // Award RAM to user
+        if (req.body.userEmail) {
+            const reward = require('../services/gamification').calculateReward('create_artifact');
+            await require('../services/gamification').awardRAM(req.body.userEmail, reward, 'create_artifact');
+        }
 
         res.status(201).json(artifact);
     } catch (err) {

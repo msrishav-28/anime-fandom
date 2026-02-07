@@ -16,33 +16,26 @@ exports.getUserProfile = async (req, res) => {
 
 // @desc    Award RAM to user
 // @route   POST /api/users/:email/ram
+const GamificationService = require('../services/gamification');
+
+// @desc    Award RAM to user
+// @route   POST /api/users/:email/ram
 exports.awardRAM = async (req, res) => {
     try {
         const { amount, source } = req.body; // source: 'read_artifact', 'create_artifact'
 
-        const user = await User.findOne({ email: req.params.email });
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        // Update RAM
-        user.ram_balance += amount;
-        user.total_ram_earned += amount;
-
-        // Check for Rank Up
-        // Glitch (0) -> Decoder (500) -> Architect (2000) -> Oracle (5000)
-        if (user.total_ram_earned >= 5000) user.rank = 'Oracle';
-        else if (user.total_ram_earned >= 2000) user.rank = 'Architect';
-        else if (user.total_ram_earned >= 500) user.rank = 'Decoder';
-
-        await user.save();
+        const result = await GamificationService.awardRAM(req.params.email, amount, source);
 
         res.json({
             success: true,
-            ram_balance: user.ram_balance,
-            rank: user.rank
+            ram_balance: result.ram_balance,
+            rank: result.rank,
+            leveledUp: result.leveledUp
         });
     } catch (err) {
+        if (err.message === 'User not found') {
+            return res.status(404).json({ error: 'User not found' });
+        }
         res.status(500).json({ error: 'Server Error' });
     }
 };
